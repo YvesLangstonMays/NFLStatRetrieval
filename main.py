@@ -1,16 +1,13 @@
 from bs4 import BeautifulSoup
 import requests
 import xlwt
-import xlrd
 from xlwt import Workbook
 import tkinter as tk
 from tkinter import *
 from PIL import ImageTk, Image
 import pandas as pd
 import matplotlib.pyplot as plt
-from mpl_toolkits import mplot3d
-import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
+
 
 # Define the window
 window = tk.Tk()
@@ -83,8 +80,6 @@ def getPlayerInfo(getNameVars):
             playerNameOriginal = playerName
             playerName = playerName.replace(" ", "-")
             playerName = playerName.lower()
-        else:
-            exit("Unsupported Player")
 
     # url is the website that we're scraping data from. It uses the sanitized user input as playerName
     url = f"https://www.nfl.com/players/{playerName}/stats/career"
@@ -201,39 +196,26 @@ userEntrySubmit_btn.place(x=210, y=255, anchor="center")
 
 def getCharts():
     newWindowVar = getPlayerInfo(getName())
-    chartWindow = tk.Tk()
-    chartWindowTitle = f"Stats Chart"
-    chartWindow.title(chartWindowTitle)
-    frame2 = tk.Frame(master=chartWindow, width=500, height=500, bg='black')
-    frame2.pack(fill=tk.BOTH)
-
-    def exitChartWindow():
-        chartWindow.destroy()
-
-    chartExitButton_btn = tk.Button(master=frame2, text="Exit", command=exitChartWindow)
-    chartExitButton_btn.place(x=250, y=475, anchor='center')
-
+    # chartWindow = tk.Tk()
+    # chartWindowTitle = f"Stats Chart"
+    # chartWindow.title(chartWindowTitle)
+    # frame2 = tk.Frame(master=chartWindow, width=500, height=500, bg='black')
+    # frame2.pack(fill=tk.BOTH)
+    #
+    # def exitChartWindow():
+    #     chartWindow.destroy()
+    #
+    # chartExitButton_btn = tk.Button(master=frame2, text="Exit", command=exitChartWindow)
+    # chartExitButton_btn.place(x=250, y=475, anchor='center')
+    # chartWindow.mainloop()
     chartFileName = f"Data/{newWindowVar} Passing Stats.xls"
-    df = pd.read_excel(chartFileName, header=1, usecols="B,D:R")
 
-    # x axis values
-    xAxVals = [column for column in df]
-    xAxVals.pop(0)
-    xAxVals = np.arange(len(df))
-    # y axis values
-    yAxVals = df.iloc[:, 0].tolist()
-    yAxVals = np.arange(len(df))
-    z = [xAxVals, yAxVals]
-    z = np.arange(len(df))
+    df = pd.read_excel(chartFileName, header=1, index_col=0,
+                       usecols="B,C:N")
 
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    ax.scatter(range(len(xAxVals)), range(len(yAxVals)), z)
-    plt.yticks(range(len(yAxVals)), yAxVals)
-    plt.xticks(range(len(xAxVals)), xAxVals)
+    # Create graph somewhere around here
+    df.plot()
     plt.show()
-
-    chartWindow.mainloop()
 
 
 clearEntry_btn = tk.Button(master=frame1, text="   Clear ", command=clearEntry)
