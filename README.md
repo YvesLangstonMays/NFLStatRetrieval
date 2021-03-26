@@ -7,3 +7,4 @@ Current Goals:
   - Add Rushing, Receiving, Fumble, Defensive, and Punting stats
   - Add Running backs to supported players
   - Add Receivers to supported players
+  - Add a function to retrieve Fantasy Football Stats for all supported players
