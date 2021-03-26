@@ -63,10 +63,12 @@ def getPlayerInfo(getNameVars):
                 'Kirk Cousins', 'Cam Newton', 'Drew Brees', 'Daniel Jones', 'Sam Darnold', 'Jalen Hurts',
                 'Mason Rudolph', 'C.J. Beathard', 'Russell Wilson', 'Tom Brady', 'Ryan Tannehill',
                 'Alex Smith', 'Patrick Mahomes']
-
+    
+    # Editing the data in our TestList so that we can sanitize user input by comparing it to the currently supported list of players
     TestList = [x.replace(" ", "") for x in TestList]
     TestList = [x.lower() for x in TestList]
 
+    # This for loop sanitizes the data and sets the playerName variable to the correct element in the supported players list
     for item in TestList:
         playerName = playerName.lower()
         playerName = playerName.replace(" ", "")
@@ -77,6 +79,9 @@ def getPlayerInfo(getNameVars):
             playerNameOriginal = playerName
             playerName = playerName.replace(" ", "-")
             playerName = playerName.lower()
+        else:
+            isValid = False
+            return isValid
 
     url = f"https://www.nfl.com/players/{playerName}/stats/career"
     source = requests.get(url).text
