@@ -32,14 +32,16 @@ userInput_lbl.place(x=250, y=200, anchor="center")
 userEntryBox_entry = tk.Entry(master=frame1)
 userEntryBox_entry.place(x=250, y=225, anchor="center")
 
-
+# This function retrieves the name of the player that the user has inputted and saves it into two different variables.
+# One of the variables is to be passed throughout the program, and the other is used in the next function getPlayerInfo
+# Before returning the values, they are entered into a list so that they can be used in the next function.
 def getName():
     playerName = userEntryBox_entry.get()
     newWindowVar = playerName
     getNameVars = [playerName, newWindowVar]
     return getNameVars
 
-
+# This function scrapes the data and saves it into a file. It is highly commented within the function
 def getPlayerInfo(getNameVars):
     # Changing player input for the filename used at the end
     playerName = getNameVars[0]
@@ -53,6 +55,7 @@ def getPlayerInfo(getNameVars):
     # Strip items of newline
     QBListData = [x.strip('\n') for x in QBListData]
 
+     # Creating a list that is equal to QBListData to test user input against so that QBList data doesn't need to be changed
     TestList = ['Kyler Murray', 'Matt Ryan', 'Lamar Jackson', 'Josh Allen', 'Teddy Bridgewater',
                 'Mitchell Trubisky', 'Brandon Allen', 'Baker Mayfield', 'Andy Dalton', 'Drew Lock',
                 'Matthew Stafford', 'Aaron Rodgers', 'Deshaun Watson', 'Philip Rivers', 'Mike Glennon',
