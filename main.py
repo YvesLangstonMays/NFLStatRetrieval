@@ -80,8 +80,7 @@ def getPlayerInfo(getNameVars):
             playerName = playerName.replace(" ", "-")
             playerName = playerName.lower()
         else:
-            isValid = False
-            return isValid
+            exit("Unsupported Player")
 
     url = f"https://www.nfl.com/players/{playerName}/stats/career"
     source = requests.get(url).text
