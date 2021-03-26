@@ -81,17 +81,20 @@ def getPlayerInfo(getNameVars):
             playerName = playerName.lower()
         else:
             exit("Unsupported Player")
-
+    
+    # url is the website that we're scraping data from. It uses the sanitized user input as playerName
     url = f"https://www.nfl.com/players/{playerName}/stats/career"
     source = requests.get(url).text
 
     soup = BeautifulSoup(source, 'lxml')
-
+    
+    # Headers are our columns our table that we will be saving the stats in
     headers = soup.find('table',
                         class_='d3-o-table d3-o-standings--detailed d3-o-table--sortable {sortlist: [[0,1]], debug: true}').thead.text.split(
         "\n")
     headers = list(filter(None, headers))
-
+  
+    # Data consists of the statistics in the table under the headers
     data = soup.find('table',
                      class_='d3-o-table d3-o-standings--detailed d3-o-table--sortable {sortlist: [[0,1]], debug: true}').tbody.text.replace(
         " ", "").split('\n')
@@ -99,9 +102,11 @@ def getPlayerInfo(getNameVars):
 
     # Creating the workbook
     wb = Workbook()
-
+    
+    
     sheet1 = wb.add_sheet(playerName, cell_overwrite_ok=True)
-
+    
+    #Style makes our headers bold during our while loop that writes them to the excel sheet
     style = xlwt.easyxf('font: bold 1')
     horizontalColumn = 1
     verticalRow = 1
@@ -126,21 +131,22 @@ def getPlayerInfo(getNameVars):
             dataCounter = dataCounter + 1
         currentRow = currentRow + 1
         verticalRow = verticalRow + 1
-
+    
+    # This sets our file name to the name in our list of supported players combined with a string and then saves the file
     fileName = f"Data/{playerNameOriginal} Passing Stats.xls"
     wb.save(fileName)
 
     return newWindowVar
 
-
+# This is the function our button executes later on
 def getAll():
     getPlayerInfo(getName())
 
-
+# This is the command our clear button executes that allows the user to quickly clear the text box in case they want to input multiple players
 def clearEntry():
     userEntryBox_entry.delete(0, tk.END)
 
-
+# This is the command that our exit button executes to allow the user to close the program
 def exitClient():
     window.destroy()
 
@@ -168,7 +174,7 @@ instruction.place(x=250, y=375, anchor='center')
 exitButton_btn = tk.Button(master=frame1, text="Exit", command=exitClient)
 exitButton_btn.place(x=295, y=475, anchor='center')
 
-
+# Defines and places the image in the main window
 img = Image.open('tom-brady-patriots-nfl-wachira-kacharat.png')
 img2 = img.resize((200, 150), Image.ANTIALIAS)
 img3 = ImageTk.PhotoImage(img2)
@@ -181,6 +187,7 @@ userEntrySubmit_btn = tk.Button(master=frame1,
 userEntrySubmit_btn.place(x=210, y=255, anchor="center")
 
 
+# This is what the charts button executes and is currently a work in progress. It will display all of our data in a nice, visually pleasing and easy to read chart.
 def getCharts():
 
     newWindowVar = getPlayerInfo(getName())
