@@ -1,5 +1,5 @@
 # NFLStatRetrieval
-
+This no longer works since I am banned from NFL.com for not using a better delay between requests. ;(
 <img width="499" alt="Screenshot 2023-06-30 at 8 27 01 AM" src="https://github.com/YvesLangstonMays/NFLStatRetrieval/assets/76705625/051e75ac-f20b-4e7f-ad44-9c2cc5d75425">
 
 
